@@ -1,14 +1,9 @@
-
-# class BuyForm(forms.Form):
-
-#     <button type="button">Buy Book</button>
-#     <button type="button">Purchase E-Book</button>
-#     <button type="button">Rent</button>
-
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
+
+BOOK_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 15)]
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -23,3 +18,12 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class CartAddBookForm(forms.Form):
+    quantity = forms.TypedChoiceField(
+                                choices=BOOK_QUANTITY_CHOICES,
+                                coerce=int)
+    update = forms.BooleanField(required=False,
+                                initial=False,
+                                widget=forms.HiddenInput)
+

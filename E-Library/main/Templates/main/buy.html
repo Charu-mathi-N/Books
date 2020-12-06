@@ -1,53 +1,38 @@
-<head>
-    {% load static %}
-    <!-- Prism CSS -->
-    <link href="{% static 'tinymce/css/prism.css' %}" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript for Materialize CSS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</head>
+{% extends "main/header.html" %}
+{% block content %}
+    </body>
+        <div class="row" style="width:600px; margin:0 auto;">
+            <h1>Book Number <b>{{ books.id }}  </b></h1>
 
-<nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Find your fav Book</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/">Home</a></li>
-        <li><a href="/login/">Login</a></li>
-        <li><a href="/register/">Register</a></li>
-      </ul>
-    </div>
-</nav>
-</body>
-    <div class="row" style="width:600px; margin:0 auto;">
-        <h1>Book Number <b>{{ books.id }}  </b></h1>
-
-        <h3> Title -</b>{{ books.Title }}</h3>
-        <p><b>Rated</b> - {{ books.Rating }}</p>
-        <p><b>Authors</b> - {{ books.Authors }} </p>
-        <p><b>ISBN </b> - {{ books.ISBN  }}</p>
-        </p><b>ISBN13 </b>- {{ books.ISBN13 }}</p>
-        </p><b>Language </b>- {{ books.Language }}</p>
-        </p><b>Pages</b>- {{ books.Pages }}</p>
-        </p><b>Rating_Count </b>- {{ books.Rating_Count }}</p>
-        </p><b>Reviews_Count </b>- {{ books.Reviews_Count }}</p>
-        </p><b>Published_Date</b>- {{ books.Published_Date }}</p>
-        </p><b>Publisher </b>- {{ books.Publisher }}</p>
+            <h3> Title -</b>{{ books.Title }}</h3>
+            <p><b>Rated</b> - {{ books.Rating }}</p>
+            <p><b>Authors</b> - {{ books.Authors }} </p>
+            <p><b>ISBN </b> - {{ books.ISBN  }}</p>
+            </p><b>ISBN13 </b>- {{ books.ISBN13 }}</p>
+            </p><b>Language </b>- {{ books.Language }}</p>
+            </p><b>Pages</b>- {{ books.Pages }}</p>
+            </p><b>Rating_Count </b>- {{ books.Rating_Count }}</p>
+            </p><b>Reviews_Count </b>- {{ books.Reviews_Count }}</p>
+            </p><b>Published_Date</b>- {{ books.Published_Date }}</p>
+            </p><b>Publisher </b>- {{ books.Publisher }}</p>
 
 
-        <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a>
-        <a class="btn" href="/main/cart/{{ books.id}}/">Add this to Cart</a>
-        {% if request.user.is_authenticated %}
-             <span class="storefront_cart">
-                 <a href="{% url 'Cart' books.id %}">[Add to Cart]</a>
-             </span>
-         {% endif %}
-        <!-- <button class="btn" type="submit">Buy Book</button> -->
-        <!-- <button type="submit" action="/Pay.html">Buy Book</button> -->
-        <!-- <form class="row" style="width:400px; margin:0 auto;">
-            {% csrf_token %}
+            <!-- <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a><br><br> -->
+            {% if request.user.is_authenticated %}
+                <!-- <a class="btn" href="/cart_add/{{ books.id }}">[Add to Cart]</a> -->
+                <!-- <p class="price">${{ book.price }}</p> -->
+                <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a><br><br>
+                <form action="/main/cart_add/{{ books.id }}/" method="post">
+                  {{ cart_book_form }}
+                  {% csrf_token %}
+                    <input class='btn' type="submit" value="[Add to Cart]">
+                </form>
+            {% else %}
+                <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a><br>
+                <a class="btn" href="/login/">[Add to Cart]</a>
+            {% endif %}
 
-            <button type="button">Add to Cart</button>
-        </form> -->
-    </div>
-</body>
+            </form>
+        </div>
+    </body>
+{% endblock %}

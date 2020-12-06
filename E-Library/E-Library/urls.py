@@ -22,58 +22,10 @@ app_name = 'main'
 
 urlpatterns = [
     path('', include('main.urls')),
+    #path('cart', include('cart.urls')),
+    #path('', include('main.api_views')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    # path("", views.homepage, name = "Homepage"),
-    # path("login/", views.login_request, name = "Login"),
-    # path("register/", views.register, name="register"),
-    # path("logout/", views.logout_request, name= "Logout"),
-    # path(
-    #     'admin/password_reset/',
-    #     auth_views.PasswordResetView.as_view(template_name = 'main/Reset.html'),
-    #     name='admin_password_reset',
-    # ),
-    # path(
-    #     'admin/password_sent/',
-    #     auth_views.PasswordResetDoneView.as_view(template_name = 'main/password_sent.html'),
-    #     name='admin_password_sent',
-    # ),
-    # path(
-    #     'password_reset/<uidb64>/<token>/',
-    #     auth_views.PasswordResetConfirmView.as_view(),
-    #     name='password_confirm',
-    # ),
-    # path(
-    #     'reset/done/',
-    #     auth_views.PasswordResetCompleteView.as_view(template_name = 'main/password_complete.html'),
-    #     name='password_complete',
-    # ),
+
 ]
 
-
-
-# from django.urls import path, include
-# from django.contrib.auth.models import User
-# from rest_framework import routers, serializers, viewsets
-
-# # Serializers define the API representation.
-# class UserSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['url', 'username', 'email', 'is_staff']
-
-# # ViewSets define the view behavior.
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-
-# # Routers provide an easy way of automatically determining the URL conf.
-# router = routers.DefaultRouter()
-# router.register(r'users', UserViewSet)
-
-# # Wire up our API using automatic URL routing.
-# # Additionally, we include login URLs for the browsable API.
-# urlpatterns = [
-#     path('', include(router.urls)),
-#     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-# ]

@@ -22,9 +22,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Loading the CSV file")
 
-        '''if book.objects.exists():
+        if book.objects.exists():
             print(ALREDY_LOADED_ERROR_MESSAGE)
-            return'''
+            return
 
         for row in DictReader(open("./Book.csv")):
                 book = Books()
@@ -37,9 +37,6 @@ class Command(BaseCommand):
                 book.Pages = row['  num_pages']
                 book.Rating_Count = row['ratings_count']
                 book.Reviews_Count = row['text_reviews_count']
-                #raw_published_Date = row['publication_date']
-                #publication_date = UTC.localize(datetime.strptime(raw_published_Date, DATETIME_FORMAT))
-                #book.Published_Date = publication_date
                 book.Published_Date = row['publication_date']
                 book.Publisher = row['publisher']
                 book.save()
