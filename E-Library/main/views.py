@@ -14,7 +14,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from .forms import CartAddBookForm
-#from .models import Cart
 from .cart import Cart
 
 # Create your views here.
@@ -93,24 +92,14 @@ def Pay(request, bookID):
     books = Books.objects.get(id = bookID)
     return render(request, 'main/Pay.html', {'books': books,})
 
-# def Display_Cart(request):
-#     #books = Books.objects.get(id = bookID)
-#     #return render(request, 'main/Cart.html', {'books': books,})
-#     #cart = Cart.objects.get(id = bookID)
-#     cart = Cart(request)
-#     return render(request, 'main/Displaycart.html', {'cart': cart})
-
 @login_required
 @require_POST
 def cart_add(request, bookID):
     cart = Cart(request)
     book = get_object_or_404(Books, id=bookID)
     form = CartAddBookForm(request.POST)
-    if form.is_valid():
-        cd = form.cleaned_data
-        cart.add(book=book,
-                 quantity=cd['quantity'],
-                 update_quantity=cd['update'])
+    cart.add(book=book,
+            quantity = 1)
     return redirect('main:cart_detail')
 
 def cart_remove(request, bookID):

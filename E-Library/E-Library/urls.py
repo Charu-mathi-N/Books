@@ -22,8 +22,6 @@ app_name = 'main'
 
 urlpatterns = [
     path('', include('main.urls')),
-    #path('cart', include('cart.urls')),
-    #path('', include('main.api_views')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
 

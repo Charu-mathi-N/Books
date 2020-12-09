@@ -22,9 +22,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print("Loading the CSV file")
 
-        if book.objects.exists():
-            print(ALREDY_LOADED_ERROR_MESSAGE)
-            return
+        # if book.objects.exists():
+        #     print(ALREDY_LOADED_ERROR_MESSAGE)
+        #     return
 
         for row in DictReader(open("./Book.csv")):
                 book = Books()

@@ -40,6 +40,13 @@ class CustomerPremium(models.Model):
     cancel = models.BooleanField(default=False)
     membership = models.BooleanField(default=False)
 
+class Cart(models.Model):
+    userid = models.ForeignKey(User, on_delete=models.CASCADE)
+    product_id = models.IntegerField(default=1)
+    name = models.CharField(max_length = 50)
+    quantity = models.IntegerField(default=1)
+    price = models.IntegerField(default=250)
+
 
 '''class Cart(models.Model):
 
