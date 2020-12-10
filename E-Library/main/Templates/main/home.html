@@ -8,10 +8,10 @@
           <a href="">
             <span class="card-title"> {{ book.title|capfirst }}</span>
 
-              <a href="./main/Buy/{{ book.id }}/">{{ book.id }} {{ book.Title }}</a>
+              <a href="./main/Buy/{{ book.id }}/">{{ book.id }}. {{ book.Title }}</a><br>
 
-              Rated - {{ book.Rating }}
-              <p> {{ book.Authors }} </p>
+              Rated - {{ book.Rating }}/5
+              <p> AUTHOR: {{ book.Authors }} </p>
           </a>
           </div>
         </div>

@@ -110,7 +110,19 @@ def cart_remove(request, bookID):
 
 def cart_detail(request):
     cart = Cart(request)
+    # for item in cart:
+    #     item['update_quantity_form'] = CartAddBookForm(
+    #                       initial={'quantity': item['quantity'],
+    #                       'update': True})
+
     return render(request, 'main/Displaycart.html', {'cart': cart})
+
+
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("main:cart_detail")
+
 
 # def product_detail(request, id, slug):
 #     book = get_object_or_404(Book, id=id,

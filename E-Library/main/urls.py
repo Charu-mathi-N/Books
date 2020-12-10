@@ -39,9 +39,9 @@ urlpatterns = [
 
 
     path('main/cart_add/<bookID>/', views.cart_add, name='adding'),
-    path('main/cart_remove/<int:bookID>/', views.cart_remove, name='remove'),
+    path('Displaycart/cart_remove/<bookID>/', views.cart_remove, name='remove'),
     path('Displaycart/',views.cart_detail, name='cart_detail'),
-
+    path('Displaycart/cart_clear/', views.cart_clear, name='clear'),
 
     # path('cart/item_clear/<int:bookID>/', views.item_clear, name='item_clear'),
     # path('cart/item_increment/<int:bookID>/',
