@@ -15,8 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#from django.contrib.auth import views as auth_views
-#import smtplib
 
 app_name = 'main'
 
@@ -24,6 +22,5 @@ urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-
 ]
 

@@ -1,5 +1,7 @@
 {% extends "main/header.html" %}
 {% block content %}
+  {% include "main/popup.html" %}
+
   <div class="row">
     {% for book in books %}
       <div class="col s12 m6">

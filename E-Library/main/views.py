@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from django.views.generic import TemplateView, ListView
 from django.contrib import messages
 from .forms import NewUserForm
 from django.contrib.auth import views as auth_views
@@ -15,6 +16,8 @@ from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from .forms import CartAddBookForm
 from .cart import Cart
+
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -88,9 +91,31 @@ def Reset(request):
             messages.error(request, "Invalid email_id")
     return render(request, 'main/Reset.html')
 
-def Pay(request, bookID):
-    books = Books.objects.get(id = bookID)
-    return render(request, 'main/Pay.html', {'books': books,})
+def searchposts(request):
+    if request.method == 'GET':
+        query= request.GET.get('q')
+
+        submitbutton= request.GET.get('submit')
+
+        if query is not None:
+            lookups= Q(Title__icontains=query) | Q(Authors__icontains=query)
+
+            results= Books.objects.filter(lookups).distinct()
+            messages.success(request, "Found books")
+
+            context={'results': results,
+                     'submitbutton': submitbutton}
+
+            return render(request, 'main/header.html', context)
+
+        else:
+            return render(request, 'main/header.html')
+
+    else:
+        return render(request, 'main/home.html')
+
+def Pay(request):
+    return render(request, 'main/Pay.html')
 
 @login_required
 @require_POST
@@ -98,6 +123,7 @@ def cart_add(request, bookID):
     cart = Cart(request)
     book = get_object_or_404(Books, id=bookID)
     form = CartAddBookForm(request.POST)
+    messages.success(request, "Successfully Added to Cart")
     cart.add(book=book,
             quantity = 1)
     return redirect('main:cart_detail')
@@ -106,157 +132,30 @@ def cart_remove(request, bookID):
     cart = Cart(request)
     book = get_object_or_404(Books, id=bookID)
     cart.remove(book)
+    messages.info(request, "Removed Item Successfully")
     return redirect('main:cart_detail')
 
 def cart_detail(request):
     cart = Cart(request)
-    # for item in cart:
-    #     item['update_quantity_form'] = CartAddBookForm(
-    #                       initial={'quantity': item['quantity'],
-    #                       'update': True})
-
     return render(request, 'main/Displaycart.html', {'cart': cart})
-
 
 def cart_clear(request):
     cart = Cart(request)
     cart.clear()
+    messages.info(request, "Cart Cleared Successfully")
     return redirect("main:cart_detail")
 
 
-# def product_detail(request, id, slug):
-#     book = get_object_or_404(Book, id=id,
-#                                          slug=slug,
-#                                          available=True)
-
-#     cart_product_form = CartAddBookForm()
-
-#     return render(request,
-#                   'shop/product/detail.html',
-#                   {'book': book,
-
-# 'cart_product_form': cart_product_form
-
-
-
-# })
-
-# def cart_add(request, bookID):
-#     cart = Cart(request)
-#     product = Books.objects.get(id = bookID)
-#     cart.add(product)
-#     return redirect("main:home")
-
-# @login_required
-# def cart_add(request, bookID):
-#     cart = Cart(request)
-#     product = get_object_or_404(Books, id=bookID)
-#     form = CartAddProductForm(request.POST)
-#     if form.is_valid():
-#         cd = form.cleaned_data
-#         cart.add(product=product,
-#                  quantity=cd['quantity'],
-#                  update_quantity=cd['update'])
-#     return redirect('cart:cart_detail')
-
-
-# @login_required
-# def remove(request, id):
-#     cart = Cart(request)
-#     books = Books.objects.get(id = bookID)
-#     cart.remove(bookID)
-#     return redirect("main:home")
-
-
-# @login_required
-# def item_increment(request, id):
-#     cart = Cart(request)
-#     books = Books.objects.get(id = bookID)
-#     cart.add(bookID)
-#     return redirect("main:home")
-
-
-# @login_required
-# def item_decrement(request, id):
-#     cart = Cart(request)
-#     books = Books.objects.get(id = bookID)
-#     cart.decrement(bookID)
-#     return redirect("main:home")
-
-
-# @login_required
-# def cart_clear(request):
-#     cart = Cart(request)
-#     cart.clear()
-#     return redirect("main:home")
-
-# @login_required
-# def cart_detail(request):
-#     return redirect("main:home")
-
-# def cart_add(request, bookID):
-#     book_id = int(bookID)
-#     book = get_object_or_404(Books, pk=bookID)
-#     cart,created = Cart.objects.get_or_create(user=request.user)
-#     cart.add(bookID)
-#     return redirect('home')
-
-# @login_required
-# def cart_add(request, bookID):
-#     book = get_object_or_404(Books, pk=bookID)
-#     cart,created = Cart.objects.get_or_create(user=request.user, active=True)
-#     #order,created = BookOrder.objects.get_or_create(book=book,cart=cart)
-#     #order.quantity += 1
-#     #order.save()
-#     messages.success(request, "Cart updated!")
-#     return redirect('main:home')
-
-# def cart_add(request, bookID):
-#     cart = Cart(request)
-#     books = Books.objects.get(id=bookID)
-#     cart.add()
-#     cart.add_to_cart(bookID)
-#     return redirect("home")
-
-
-# @login_required
-# def item_clear(request, bookID):
-#     cart = Cart(request)
-#     books = Books.objects.get(id=bookID)
-#     cart.remove(books)
-#     return redirect("cart_detail")
-
-
-# @login_required
-# def item_increment(request, bookID):
-#     cart = Cart(request)
-#     books = Books.objects.get(id=bookID)
-#     cart.add(books=books)
-#     return redirect("main:home")
-
-
-# @login_required
-# def item_decrement(request, bookID):
-#     cart = Cart(request)
-#     books = Books.objects.get(id=bookID)
-#     cart.decrement(books=books)
-#     return redirect("cart_detail")
-
-
-# @login_required
-# def cart_clear(request):
-#     cart = Cart(request)
-#     cart.clear()
-#     return redirect("cart_detail")
-
-
-# @login_required
-# def cart_detail(request):
-#     return render(request, 'cart/cart_detail.html')
-
+@login_required
 def premium(request):
     return render(request, 'main/premium.html')
 
+@login_required
 def Buy_Premium(request):
     return render(request, 'main/Buy_Premium.html')
+
+# def checkout(request, bookID):
+#     books = Books.objects.get(id = bookID)
+#     return render(request, 'main/Buy_Premium.html', {'books': books,})
+
 

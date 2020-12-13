@@ -1,5 +1,7 @@
 {% extends "main/header.html" %}
 {% block content %}
+    {% include "main/popup.html" %}
+
     </body>
         <div class="row" style="width:600px; margin:0 auto;">
             <h1>Book Number <b>{{ books.id }}  </b></h1>
@@ -21,14 +23,14 @@
             {% if request.user.is_authenticated %}
                 <!-- <a class="btn" href="/cart_add/{{ books.id }}">[Add to Cart]</a> -->
                 <!-- <p class="price">${{ book.price }}</p> -->
-                <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a><br><br>
+                <a class="btn" href="/main/Pay/">Buy Book No: {{ books.id }}</a><br><br>
                 <form action="/main/cart_add/{{ books.id }}/" method="post">
                   {{ cart_book_form }}
                   {% csrf_token %}
                     <input class='btn' type="submit" value="[Add to Cart]">
                 </form>
             {% else %}
-                <a class="btn" href="/main/Pay/{{ books.id }}/">Buy Book No: {{ books.id }}</a><br>
+                <a class="btn" href="/main/Pay/">Buy Book No: {{ books.id }}</a><br>
                 <a class="btn" href="/login/">[Add to Cart]</a>
             {% endif %}
 

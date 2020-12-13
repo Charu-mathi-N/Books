@@ -58,9 +58,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SESSION_EXPIRE_SECONDS = 120  # 2 min
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
-SESSION_TIMEOUT_REDIRECT = 'logout/'  # redirect to whatever page
+# SESSION_COOKIE_AGE = 3*60
+
+# # AUTO_LOGOUT_DELAY = 5 #equivalent to 5 minutes
+
+# # SESSION_EXPIRE_SECONDS = 120  # 2 min
+# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+# SESSION_TIMEOUT_REDIRECT = 'logout/'  # redirect to whatever page
 
 ROOT_URLCONF = 'E-Library.urls'
 

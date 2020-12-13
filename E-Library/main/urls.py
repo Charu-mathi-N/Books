@@ -34,25 +34,19 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(template_name = 'main/password_complete.html'),
         name='password_complete',
     ),
-    path(r'main/Pay/<bookID>/', views.Pay, name = 'Pay'),
-    #path('Displaycart/', views.Display_Cart, name = 'Display_Cart'),
-
+    path(r'main/Pay/', views.Pay, name = 'Pay'),
 
     path('main/cart_add/<bookID>/', views.cart_add, name='adding'),
     path('Displaycart/cart_remove/<bookID>/', views.cart_remove, name='remove'),
     path('Displaycart/',views.cart_detail, name='cart_detail'),
     path('Displaycart/cart_clear/', views.cart_clear, name='clear'),
 
-    # path('cart/item_clear/<int:bookID>/', views.item_clear, name='item_clear'),
-    # path('cart/item_increment/<int:bookID>/',
-    #      views.item_increment, name='item_increment'),
-    # path('cart_clear/', views.cart_clear, name='cart_clear'),
-
+    path(r'^$', views.searchposts, name='searchposts'),
 
     path('api/v1/books/', api_views.BookList.as_view()),
     path('api/v1/books/new', api_views.BookCreate.as_view()),
     path('api/v1/books/<bookId>/', api_views.BookRetrieveUpdateDestroy.as_view()),
     path('premium/', views.premium, name = 'Premium'),
-    path('Buy_Premium/', views.Buy_Premium, name = 'Buy_Premium'),
+    path('main/Buy_Premium/', views.Buy_Premium, name = 'Buy_Premium'),
 
 ]
